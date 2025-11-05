@@ -69,7 +69,10 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-            [Required]
+			//[Required]
+			//[Display(Name = "Username")]
+			//public string UserName { get; set; }
+			[Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -101,6 +104,12 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
                 {
                     Console.WriteLine(v.GetType().FullName);
                 }
+                //ApplicationUser AppUser = new ApplicationUser()
+                //{
+                //    Email = Input.Email,
+                //    UserName = Input.Email,
+                //    SecurityStamp = Guid.NewGuid().ToString(),
+                //};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 Console.WriteLine($"User created: {user.Email}");
                 if (result.Succeeded)

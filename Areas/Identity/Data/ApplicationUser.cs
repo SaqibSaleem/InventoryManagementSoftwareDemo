@@ -9,6 +9,9 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Data;
 // Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser
 {
-    public string UserName { get; set; } = "";
+    //public string UserName { get; set; } = "";
+    //public string Email { get; set; } = "";
+    //public string UserUniqueId { get; set; } = "";
+
 }
 
