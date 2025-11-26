@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _dbContext;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
@@ -39,7 +41,8 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            ApplicationDbContext dbContext,
+			RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -48,7 +51,8 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
-        }
+            _dbContext = dbContext;
+		}
         public List<SelectListItem> Roles { get; set; }
         public void OnGet()
         {
@@ -114,8 +118,17 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
                 Console.WriteLine($"User created: {user.Email}");
                 if (result.Succeeded)
                 {
-                    // Assign role from dropdown
-                    if (!string.IsNullOrEmpty(Input.SelectedRole))
+                   
+					var UserDetails = new Models.UserDetails()
+                    {
+                        UserId = user.Id,
+                        Email = user.Email,
+                        CreatedDate = DateTime.Now
+                    };
+                    _dbContext.UserDetails.Add(UserDetails);
+                    _dbContext.SaveChanges();
+					// Assign role from dropdown
+					if (!string.IsNullOrEmpty(Input.SelectedRole))
                         await _userManager.AddToRoleAsync(user, Input.SelectedRole);
 
                     await _signInManager.SignInAsync(user, isPersistent: false);

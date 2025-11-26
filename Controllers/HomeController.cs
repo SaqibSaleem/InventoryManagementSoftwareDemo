@@ -1,21 +1,41 @@
 using System.Diagnostics;
 using InventoryManagementSoftwareDemo.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using InventoryManagementSoftwareDemo.Areas.Identity.Data;
 
 namespace InventoryManagementSoftwareDemo.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+
+		public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager,
+			ApplicationDbContext dbContext)
         {
             _logger = logger;
-        }
-
+            _userManager = userManager;
+            _dbContext = dbContext;
+		}
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+				var UserDetails = _dbContext.UserDetails.ToList();
+				return View(UserDetails);
+			}
+            catch (Exception ex)
+            {
+
+                return View(ex);
+            }
+            
         }
 
         public IActionResult Privacy()

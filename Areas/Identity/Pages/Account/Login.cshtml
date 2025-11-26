@@ -6,7 +6,7 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
+
 <div class="auth-main relative">
     <div class="auth-wrapper v1 flex items-center w-full h-full min-h-screen">
         <div class="auth-form flex items-center justify-center grow flex-col min-h-screen relative p-6 ">
@@ -35,13 +35,13 @@
                                 <label asp-for="Input.Password">Password</label>
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
-                            <div class="mb-3">
+                            @* <div class="mb-3">
                                 <div class="form-check">
                                     <input asp-for="Input.RememberMe" class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked />
                                     <label asp-for="Input.Password" class="form-check-label text-muted">Remember me?</label>
                                 
                             </div>
-                            </div>
+                            </div> *@
                             <div class="mt-4 text-center">
                                 <button id="login-submit" type="submit" class="btn btn-primary mx-auto shadow-2xl">Login</button>
                             </div>

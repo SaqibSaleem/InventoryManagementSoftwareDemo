@@ -1,6 +1,83 @@
-﻿
+﻿@model List<UserDetails>
+@{
+    Layout = "_HomeLayout";
+}
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+        <div class="page-block">
+            <div class="page-header-title">
+                <h5 class="mb-0 font-medium">Default</h5>
+            </div>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
+                <li class="breadcrumb-item" aria-current="page">Default</li>
+            </ul>
+        </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="grid grid-cols-12 gap-x-6">
+        
+        <div class="col-span-12 xl:col-span-12 md:col-span-12">
+            <div class="card table-card">
+                <div class="card-header">
+                    <h5>Users Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="unread">
+                                    <td>
+                                        <h6 class="mb-1">Picture</h6>
+                                    </td>
+                                    <td>
+                                        <h6 class="mb-1">Email</h6>
+                                    </td>
+                                    <td>
+                                        Action
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model!= null)
+                                {
+                                    foreach (var data in Model)
+                                    {
+                                        <tr class="unread">
+                                            <td>
+                                                <img class="rounded-full max-w-10" style="width: 40px" src="~/assets/images/user/avatar-2.jpg" alt="activity-user" />
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-1">@data.Email</h6>
+
+                                            </td>
+                                            
+                                            <td>
+                                                
+                                                <a href="#!" class="badge bg-theme-bg-1 text-white text-[12px]">Update</a>
+                                                <a href="#!" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr class="unread">
+                                        <td>No Data Found</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
 </div>
+
