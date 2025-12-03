@@ -123,8 +123,9 @@ namespace InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account
                     {
                         UserId = user.Id,
                         Email = user.Email,
-                        CreatedDate = DateTime.Now
-                    };
+                        CreatedDate = DateTime.Now,
+                        IsActive = true
+					};
                     _dbContext.UserDetails.Add(UserDetails);
                     _dbContext.SaveChanges();
 					// Assign role from dropdown

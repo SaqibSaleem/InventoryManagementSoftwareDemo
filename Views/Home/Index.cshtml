@@ -31,13 +31,16 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr class="unread">
-                                    <td>
+                                    <td class="col-2">
                                         <h6 class="mb-1">Picture</h6>
                                     </td>
-                                    <td>
+                                    <td class="col-4">
                                         <h6 class="mb-1">Email</h6>
                                     </td>
-                                    <td>
+                                    <td class="col-4">
+                                        <h6 class="mb-1">Phone Number</h6>
+                                    </td>
+                                    <td class="col-2">
                                         Action
                                     </td>
                                 </tr>
@@ -55,11 +58,22 @@
                                                 <h6 class="mb-1">@data.Email</h6>
 
                                             </td>
-                                            
                                             <td>
-                                                
-                                                <a href="#!" class="badge bg-theme-bg-1 text-white text-[12px]">Update</a>
-                                                <a href="#!" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
+                                                <h6 class="mb-1">@data.PhoneNumber</h6>
+
+                                            </td>
+                                            <td>
+
+                                                <a href="#!" onclick="GetUser(@data.Id)"  class="badge bg-primary-100 text-white text-[12px]">Update</a>
+                                                @if (data.IsActive == true)
+                                                {
+                                                    <a href="~/Home/DeleteRestoreUser/@data.Id" id="@data.Id" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="~/Home/DeleteRestoreUser/@data.Id" class="badge bg-success-400 text-white text-[12px] mx-2">Restore</a>
+                                                }
+
                                             </td>
                                         </tr>
                                     }
@@ -80,4 +94,37 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+@* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >Open modal for</button> *@
 
+@* User Update Modal *@
+<div class="modal fade" id="UserDetailModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">User Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="ModalEmail" class="col-form-label">Email:</label>
+                        <input readonly type="text" class="form-control" id="ModalEmail">
+                    </div>
+                    <div class="mb-3">
+                        <label for="ModalNumber" class="col-form-label">Phone Number:</label>
+                        <input type="number" maxlength="11" class="form-control" id="ModalNumber">
+                    </div>
+                <div class="mb-3">
+                    <img src="~/assets/images/user/avatar-2.jpg" class="img-thumbnail" alt="...">
+                    <input type="file"  class="form-control my-2" id="Picture">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="UpdateDetails" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/CustomJS/UserDetails.js"></script>

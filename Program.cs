@@ -59,19 +59,19 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.Use(async (context, next) =>
-{
-	var endpoint = context.GetEndpoint();
+//app.Use(async (context, next) =>
+//{
+//	var endpoint = context.GetEndpoint();
 
-	// Check if this is the home page and user is not authenticated
-	if (context.Request.Path == "/" && !context.User.Identity.IsAuthenticated)
-	{
-		context.Response.Redirect("/Identity/Account/Login");
-		return;
-	}
+//	// Check if this is the home page and user is not authenticated
+//	if (!context.User.Identity.IsAuthenticated)
+//	{
+//		context.Response.Redirect("/Identity/Account/Login");
+//		return;
+//	}
 
-	await next();
-});
+//	await next();
+//});
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,10 +1,9 @@
-using System.Diagnostics;
+using InventoryManagementSoftwareDemo.Areas.Identity.Data;
 using InventoryManagementSoftwareDemo.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
-using InventoryManagementSoftwareDemo.Areas.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace InventoryManagementSoftwareDemo.Controllers
 {
@@ -52,5 +51,67 @@ namespace InventoryManagementSoftwareDemo.Controllers
         {
             return View();
         }
-    }
+        public IActionResult DeleteRestoreUser(int id)
+        {
+            var user = _dbContext.UserDetails.FirstOrDefault(u => u.Id == id);
+            if (user != null)
+            {
+                user.IsActive = !user.IsActive;
+                _dbContext.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+		}
+
+        // Get User By Id
+        [HttpGet]
+        public object GetUserById(int id)
+        {
+            try
+            {
+                var userDetails = _dbContext.UserDetails.Where(x => x.Id == id).FirstOrDefault();
+                if (userDetails != null)
+                {
+                    return userDetails;
+                }
+                else
+                {
+                    return ("User Not found");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return ex.ToString();
+            }
+        }
+
+        // Update user Details
+        [HttpPost]
+        public IActionResult UpdateUserDetails(UserDetails userDetails)
+        {
+            try
+            {
+                var userData = _dbContext.UserDetails.Where(x => x.Id == userDetails.Id).FirstOrDefault();
+                if (userData != null)
+                {
+                    userData.PhoneNumber = userDetails.PhoneNumber;
+                    userData.UpdatedDate = System.DateTime.Now;
+                    _dbContext.SaveChanges();
+					return RedirectToAction("Index", "Home");
+				}
+                else
+                {
+                    return View("User Not Updated");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return View(ex);
+            }
+           
+		
+
+		}
+	}
 }
