@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
 namespace InventoryManagementSoftwareDemo.Models
@@ -15,5 +16,7 @@ namespace InventoryManagementSoftwareDemo.Models
 		public bool IsActive { get; set; } = true;
 		public DateTime CreatedDate { get; set; } = System.DateTime.Now;
 		public DateTime UpdatedDate { get; set; }
+		[NotMapped]
+		public IFormFile ProfileImage { get; set; }
 	}
 }

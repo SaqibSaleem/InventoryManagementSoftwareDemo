@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.IO;
 
 namespace InventoryManagementSoftwareDemo.Controllers
 {
@@ -13,21 +14,28 @@ namespace InventoryManagementSoftwareDemo.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
 
 		public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager,
-			ApplicationDbContext dbContext)
-        {
-            _logger = logger;
-            _userManager = userManager;
-            _dbContext = dbContext;
+			ApplicationDbContext dbContext, IWebHostEnvironment webHostEnvironment)
+		{
+			_logger = logger;
+			_userManager = userManager;
+			_dbContext = dbContext;
+			_webHostEnvironment = webHostEnvironment;
 		}
-        public IActionResult Index()
+		public IActionResult Index()
         {
             try
             {
 				var UserDetails = _dbContext.UserDetails.ToList();
-				return View(UserDetails);
+                if (UserDetails == null || UserDetails.Count == 0)
+                {
+                    return View("No User Found");
+				}
+                
+                    return View(UserDetails);
 			}
             catch (Exception ex)
             {
@@ -91,12 +99,30 @@ namespace InventoryManagementSoftwareDemo.Controllers
         {
             try
             {
-                var userData = _dbContext.UserDetails.Where(x => x.Id == userDetails.Id).FirstOrDefault();
+                
+                
+				var userData = _dbContext.UserDetails.Where(x => x.Id == userDetails.Id).FirstOrDefault();
                 if (userData != null)
                 {
-                    userData.PhoneNumber = userDetails.PhoneNumber;
+					string wwwRootPath = _webHostEnvironment.WebRootPath;
+					string FileName = userDetails.ProfileImage.FileName;
+					//if (userData.ProfilePic!= null && userData.ProfilePic.Length > 0)
+     //               {
+     //                   var oldImg = Path.Combine("wwwroot/uploads", userDetails.ProfilePic);
+					//	if (System.IO.File.Exists(oldImg))
+					//		System.IO.File.Delete(oldImg);
+					//}
+                    FileName = Guid.NewGuid()+ Path.GetExtension(userDetails.ProfileImage.FileName);
+                    var newPath = Path.Combine(wwwRootPath+ "/ProfilePicFolder", FileName);
+                    using (var fileStream = new FileStream(newPath, FileMode.Create))
+                    {
+                        userDetails.ProfileImage.CopyTo(fileStream);
+					}
+					userData.PhoneNumber = userDetails.PhoneNumber;
                     userData.UpdatedDate = System.DateTime.Now;
-                    _dbContext.SaveChanges();
+                    userData.ProfilePic = FileName;
+					//userData.ProfilePic = img.Name;
+					_dbContext.SaveChanges();
 					return RedirectToAction("Index", "Home");
 				}
                 else
