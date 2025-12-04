@@ -3,6 +3,7 @@ using InventoryManagementSoftwareDemo.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InventoryManagementSoftwareDemo.Areas.Identity.Data;
 
@@ -20,5 +21,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         // For example, you can rename the ASP.NET Identity table names and more.
         // Add your customizations after calling base.OnModelCreating(builder);
     }
-    public DbSet<UserDetails> UserDetails { get; set; }
+	// UserDetails Table
+	public DbSet<UserDetails> UserDetails { get; set; }
+    // Products Table
+    public DbSet<Products> Products { get; set; }
+    // ProductList Table
+    [NotMapped]
+    public DbSet<ProductList> ProductList { get; set; }
+
 }
