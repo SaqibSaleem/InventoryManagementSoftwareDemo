@@ -11,7 +11,8 @@
         <div class="col-span-12 xl:col-span-12 md:col-span-12">
             <div class="card table-card">
                 <div class="card-header">
-                    <h5>Products</h5>
+                    <h4>Products <button data-bs-toggle="modal" data-bs-target="#ProductsModal" type="button" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Add Product</button></h4>
+                    
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -48,7 +49,7 @@
                                             <td>
                                                 @if (data.ItemPicture != null && data.ItemPicture.Length > 0)
                                                 {
-                                                    <img class="rounded-full max-w-10" style="width: 40px" src="~/assets/images/user/avatar-2.jpg" alt="activity-user" />
+                                                    <img class="rounded-full max-w-10" style="width: 40px" src="@Url.Content("~/ProductsImages/" + (data.ItemPicture ?? "default.png"))"  />
                                                     //<img class="rounded-full max-w-10" style="width: 40px" src="~/ProfilePicFolder/@data.ProfilePic" />
                                                     //<img class="rounded-full max-w-10" style="width: 40px" src="@Url.Content("~/ProfilePicFolder/" + (data.ItemPicture ?? "default.png"))" />
                                                 }
@@ -75,17 +76,9 @@
                                             </td>
                                             <td>
 
-                                                <a href="#!" onclick="GetUser(@data.Id)" class="badge bg-primary-100 text-white text-[12px]">Update</a>
-                                                <a href="~/Home/DeleteRestoreUser/@data.Id" id="@data.Id" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
-                                                @*  @if (data.IsActive == true)
-                                                {
-                                                    <a href="~/Home/DeleteRestoreUser/@data.Id" id="@data.Id" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
-                                                }
-                                                else
-                                                {
-                                                    <a href="~/Home/DeleteRestoreUser/@data.Id" class="badge bg-success-400 text-white text-[12px] mx-2">Restore</a>
-                                                } *@
-
+                                                <a href="#!" onclick="SelectProduct(@data.Id)" class="badge bg-primary-100 text-white text-[12px]">Update</a>
+                                                <a href="~/Products/DeleteProduct/@data.Id" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
+                                                
                                             </td>
                                         </tr>
                                     }
@@ -106,3 +99,42 @@
     </div>
     <!-- [ Main Content ] end -->
 </div>
+
+@* Add Prodducts Model *@
+<div class="modal fade" id="ProductsModal" tabindex="-1" aria-labelledby="ProductsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ProductsModalLabel">Add New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+            <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Name" class="col-form-label">Name:</label>
+                        <input required type="text" class="form-control" id="Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Quantity" class="col-form-label">Quantity:</label>
+                        <input required type="number" class="form-control" id="Quantity">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Price" class="col-form-label">Price:</label>
+                        <input required type="number" class="form-control" id="Price">
+                    </div>
+                    <div class="mb-3">
+                        <img src="~/assets/images/profile/bg-2.jpg" id="ShowItemImg" class="img-thumbnail" alt="...">
+                        <input required type="file" id="ItemPicture" class="form-control my-2">
+                    </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="AddProduct" class="btn btn-primary">Add</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/CustomJS/Products.js"></script>
