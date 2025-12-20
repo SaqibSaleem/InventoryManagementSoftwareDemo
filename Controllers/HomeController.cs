@@ -99,8 +99,6 @@ namespace InventoryManagementSoftwareDemo.Controllers
         {
             try
             {
-                
-                
 				var userData = _dbContext.UserDetails.Where(x => x.Id == userDetails.Id).FirstOrDefault();
                 if (userData != null)
                 {

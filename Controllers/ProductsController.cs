@@ -126,6 +126,45 @@ namespace InventoryManagementSoftwareDemo.Controllers
 				return View(ex.ToString());
 			}
 		}
+		[HttpPost]
+		public IActionResult UpdateProduct(Products products)
+		{
+			try
+			{
+				var productData = _dbContext.Products.Where(x => x.Id == products.Id).FirstOrDefault();
+				if (productData != null)
+				{
+					if (products.ItemPictureFile != null && products.ItemPictureFile.Length > 0)
+					{
+						string wwwRootPath = _webHostEnvironment.WebRootPath;
+						string FileName = products.ItemPictureFile.FileName;
+						FileName = Guid.NewGuid() + Path.GetExtension(products.ItemPictureFile.FileName);
+						var newPath = Path.Combine(wwwRootPath + "/ProductsImages", FileName);
+						using (var fileStream = new FileStream(newPath, FileMode.Create))
+						{
+							products.ItemPictureFile.CopyTo(fileStream);
+						}
+						products.ItemPicture = FileName;
+					}
+					else
+					{
+						products.ItemPicture = productData.ItemPicture;
+					}
+						productData.UpdatedBy = _userManager.GetUserName(User);
+					var Result = _dbContext.Products.FromSqlRaw("SP_Update_Products @p0,@p1,@p2,@p3,@p4,@p5", parameters: new object[] {products.Id, products.Name, products.Quantity, products.Price, products.ItemPicture, productData.UpdatedBy }).ToList();
+
+					return RedirectToAction("Index");
+				}
+				else
+				{
+					return View("Product Not Updated");
+				}
+			}
+			catch (Exception ex)
+			{
+				return View(ex.ToString());
+			}
+		}
 
 
 	}
