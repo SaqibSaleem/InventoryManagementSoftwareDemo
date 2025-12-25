@@ -99,7 +99,6 @@ namespace InventoryManagementSoftwareDemo.Controllers
 				{
 					return NotFound(new { error = $"Product with ID {id} not found" });
 				}
-					
 			}
 			catch (Exception ex)
 			{
