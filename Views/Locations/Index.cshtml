@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewData["Title"] = "Locations";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<div class="pc-content">
+
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="grid grid-cols-12 gap-x-6">
+
+        <div class="col-span-12 xl:col-span-12 md:col-span-12">
+            <div class="card table-card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>
+                                Locations <button data-bs-toggle="modal" id="AddNewLocation" data-bs-target="#LocationModal" type="button" class="btn btn-sm btn-success"><i class="fas fa-plus-circle"></i> Add Location</button>
+                            </h4>
+                        </div>
+                        <div class="col-md-6 align-items-end">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="unread">
+                                    <td class="col-10">
+                                        <h6 class="mb-1">Location Name</h6>
+                                    </td>
+                                    <td class="col-2">
+                                        Action
+                                    </td>
+                                </tr>
+                            </thead>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+</div>
+
+@* Add Prodducts Model *@
+<div class="modal fade" id="LocationModal" tabindex="-1" aria-labelledby="LocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="LocationModalLabel">Add New Location</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="LocationName" class="col-form-label">Location Name:</label>
+                        <input required type="text" class="form-control" id="LocationName">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="AddLocation" class="btn btn-primary AddUpdateLocation">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/CustomJS/Locations.js"></script>
+

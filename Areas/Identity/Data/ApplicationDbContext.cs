@@ -29,4 +29,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     [NotMapped]
     public DbSet<ProductList> ProductList { get; set; }
 
+    // Locations Table
+    public DbSet<Locations> Locations { get; set; }
+
 }
