@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Locations>
 @{
     ViewData["Title"] = "Locations";
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
@@ -37,7 +37,34 @@
                                     </td>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+
+                                    foreach (var data in Model)
+                                    {
+                                        <tr class="unread">
+                                            <td>
+                                                <h6 class="mb-1">@data.LocationName</h6>
+
+                                            </td>
+                                            <td>
+
+                                                <a href="#!" onclick="SelectLocation(@data.Id)" class="badge bg-primary-100 text-white text-[12px]">Update</a>
+                                                <a href="~/Locations/DeleteLocation/@data.Id" class="badge bg-danger-400 text-white text-[12px] mx-2">Delete</a>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr class="unread">
+                                        <td>@ViewData["ErrorMessage"].ToString()</td>
+                                    </tr>
+                                }
+
+                            </tbody>
                         </table>
                     </div>
                 </div>
