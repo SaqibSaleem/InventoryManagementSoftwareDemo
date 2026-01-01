@@ -1,5 +1,6 @@
 ﻿using InventoryManagementSoftwareDemo.Areas.Identity.Data;
 using InventoryManagementSoftwareDemo.Models;
+using InventoryManagementSoftwareDemo.Models.StripeHelper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -31,5 +32,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 
     // Locations Table
     public DbSet<Locations> Locations { get; set; }
+
+	// Stripe Payments Table
+    public DbSet<StripePayment> StripePayments { get; set; }
 
 }

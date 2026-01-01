@@ -1,10 +1,19 @@
 ﻿using InventoryManagementSoftwareDemo.Areas.Identity.Data;
+using InventoryManagementSoftwareDemo.Models.StripeHelper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using static InventoryManagementSoftwareDemo.Areas.Identity.Pages.Account.RegisterModel;
+
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+// Configure Stripe Service
+// REGISTER SERVICE HERE
+builder.Services.AddScoped<IPaymentService, StripePaymentService>();
+
+StripeConfiguration.ApiKey =
+	builder.Configuration["Stripe:SecretKey"];
 
 // Database
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
