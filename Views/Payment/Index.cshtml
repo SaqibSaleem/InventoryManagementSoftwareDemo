@@ -1,0 +1,149 @@
+﻿@model List<Products>
+@{
+    Layout = "_HomeLayout";
+}
+<div class="pc-content">
+
+    <!-- [ breadcrumb ] end -->
+    <!-- [ Main Content ] start -->
+    <div class="grid grid-cols-12 gap-x-6">
+
+        <div class="col-span-12 xl:col-span-12 md:col-span-12">
+            
+            <div class="card table-card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>
+                                Enter Card Details</h4>
+                        </div>
+                        <div class="col-md-6 align-items-end">
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            
+                                <div id="card-element"></div>
+                                <div id="card-errors"></div>
+                        </div>
+                        
+                    </div>
+                   
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="unread">
+                                    <td class="col-2">
+                                        <h6 class="mb-1">Picture</h6>
+                                    </td>
+                                    <td class="col-4">
+                                        <h6 class="mb-1">Name</h6>
+                                    </td>
+                                    <td class="col-2">
+                                        <h6 class="mb-1">Available Quantity</h6>
+                                    </td>
+                                    <td class="col-1">
+                                        <h6 class="mb-1">Price</h6>
+                                    </td>
+                                    <td class="col-2">
+                                        Action
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Count > 0)
+                                {
+
+                                    foreach (var data in Model)
+                                    {
+                                        <tr class="unread">
+                                            <td>
+                                                @if (data.ItemPicture != null && data.ItemPicture.Length > 0)
+                                                {
+                                                    <img class="rounded-full max-w-10" style="width: 40px" src="@Url.Content("~/ProductsImages/" + (data.ItemPicture ?? "default.png"))" />
+                                                    //<img class="rounded-full max-w-10" style="width: 40px" src="~/ProfilePicFolder/@data.ProfilePic" />
+                                                    //<img class="rounded-full max-w-10" style="width: 40px" src="@Url.Content("~/ProfilePicFolder/" + (data.ItemPicture ?? "default.png"))" />
+                                                }
+                                                else
+                                                {
+                                                    <img class="rounded-full max-w-10" style="width: 40px" src="~/assets/images/user/avatar-2.jpg" alt="activity-user" />
+                                                }
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-1">@data.Name</h6>
+
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-1">@data.Quantity</h6>
+
+                                            </td>
+                                            <td>
+                                                <h6 class="mb-1">@data.Price</h6>
+
+                                            </td>
+                                            <td>
+                                                <button onclick="btnBuy(@data.Id)" type="button" class="btn btn-sm btn-success">
+                                                    <i class="fa fa-credit-card" aria-hidden="true"></i> Buy
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr class="unread">
+                                        <td>@ViewData["ErrorMessage"].ToString()</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+    
+</div>
+
+@* Add Prodducts Model 
+
+<div class="modal fade" id="BuyProductsModal" tabindex="-1" aria-labelledby="BuyProductsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="BuyProductsModalLabel">Buy New Product</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="Name" class="col-form-label">Name:</label>
+                        <input required type="text" class="form-control" id="Name">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="Price" class="col-form-label">Price:</label>
+                        <input required type="number" class="form-control" id="Price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="Quantity" class="col-form-label">Quantity:</label>
+                        <input required type="number" class="form-control" id="Quantity">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="BuyProduct" class="btn btn-primary AddUpdateProduct">Buy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+ *@
+@* Include Stripe *@
+<script src="https://js.stripe.com/v3/"></script>
+<script src="~/CustomJS/Payments.js"></script>
